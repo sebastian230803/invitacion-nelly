@@ -1,0 +1,349 @@
+<title>Cumpleaños de Nelly</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Work+Sans:ital,wght@0,400;0,600;1,500&display=swap">
+<style>
+  :root {
+    --bg: #180F2E;
+    --card: #241542;
+    --card-edge: #32205c;
+    --text: #F5EFFF;
+    --text-muted: #B9A9DD;
+    --gold: #F4C95D;
+    --pink: #FF5D8F;
+    --teal: #37D6C4;
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Work Sans', system-ui, sans-serif;
+    min-height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-inline: 16px;
+    padding-block: 48px;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  .glow {
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(420px 260px at 20% 8%, rgba(244,201,93,0.14), transparent 70%),
+      radial-gradient(360px 240px at 85% 14%, rgba(255,93,143,0.12), transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .confetti {
+    position: fixed;
+    top: -24px;
+    width: 8px;
+    height: 14px;
+    opacity: 0.8;
+    z-index: 0;
+    border-radius: 2px;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .confetti { animation: fall linear infinite; }
+    .balloon { animation: bob ease-in-out infinite; }
+    .light { animation: twinkle ease-in-out infinite; }
+    .reveal {
+      opacity: 0;
+      transform: translateY(14px);
+      animation: rise 0.7s ease-out forwards;
+    }
+  }
+
+  @keyframes fall {
+    0%   { transform: translateY(0) rotate(0deg); }
+    100% { transform: translateY(115vh) rotate(260deg); }
+  }
+
+  @keyframes bob {
+    0%, 100% { transform: translateY(0) rotate(-3deg); }
+    50%      { transform: translateY(-16px) rotate(3deg); }
+  }
+
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.35; transform: scale(0.85); }
+    50%      { opacity: 1; transform: scale(1.1); }
+  }
+
+  @keyframes rise {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .page {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 440px;
+  }
+
+  .lights {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 14px;
+    margin-bottom: -11px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .light {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: var(--gold);
+    box-shadow: 0 0 10px 2px rgba(244,201,93,0.8);
+  }
+
+  .card {
+    position: relative;
+    background: var(--card);
+    border: 1px solid var(--card-edge);
+    border-radius: 26px;
+    padding: 44px 30px 32px;
+    box-shadow: 0 30px 70px rgba(5,2,20,0.55);
+    overflow: hidden;
+  }
+
+  .balloon {
+    position: absolute;
+    border-radius: 50% 50% 50% 50% / 58% 58% 42% 42%;
+    opacity: 0.9;
+  }
+  .balloon::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -22px;
+    width: 1px;
+    height: 24px;
+    background: rgba(245,239,255,0.25);
+  }
+  .b1 { width: 46px; height: 58px; background: var(--pink); top: -20px; left: -16px; animation-duration: 5.5s; }
+  .b2 { width: 34px; height: 44px; background: var(--teal); top: -14px; right: 18px; animation-duration: 4.4s; animation-delay: .6s; }
+  .b3 { width: 26px; height: 34px; background: var(--gold); top: -6px; right: -10px; animation-duration: 6.2s; animation-delay: 1.1s; }
+
+  .eyebrow {
+    text-align: center;
+    font-size: 13px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 600;
+    margin: 0 0 18px;
+  }
+
+  .headline {
+    text-align: center;
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    font-size: 38px;
+    line-height: 1.05;
+    margin: 0 0 14px;
+    color: var(--text);
+  }
+
+  .badge-row { display: flex; justify-content: center; margin-bottom: 22px; }
+
+  .badge {
+    width: 108px;
+    height: 108px;
+    border-radius: 50%;
+    border: 2px solid var(--gold);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    box-shadow: 0 0 0 6px rgba(244,201,93,0.08);
+  }
+
+  .badge .num {
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    font-size: 48px;
+    line-height: 1;
+    color: var(--gold);
+  }
+
+  .badge .label {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .divider {
+    height: 1px;
+    background: var(--card-edge);
+    margin: 22px 0;
+  }
+
+  .details {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+    margin-bottom: 4px;
+  }
+
+  .detail {
+    display: flex;
+    gap: 11px;
+    align-items: center;
+    font-size: 15px;
+  }
+  .detail svg { flex-shrink: 0; margin-top: 1px; }
+  .detail.addr { align-items: flex-start; }
+
+  .rsvp-label {
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    margin: 26px 0 14px;
+  }
+
+  .rsvp-row {
+    display: flex;
+    gap: 12px;
+  }
+
+  .rsvp-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 46px;
+    padding: 12px 10px;
+    border-radius: 14px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    border: 1.5px solid transparent;
+    transition: transform 0.15s ease;
+  }
+  .rsvp-btn:active { transform: scale(0.97); }
+  .rsvp-btn:focus-visible { outline: 2px solid var(--text); outline-offset: 2px; }
+
+  .rsvp-yes { background: var(--pink); color: #1B0F2E; }
+  .rsvp-no  { background: transparent; color: var(--teal); border-color: var(--teal); }
+
+  .confirm {
+    text-align: center;
+    font-size: 13px;
+    color: var(--teal);
+    margin-top: 14px;
+  }
+
+  .hint {
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 10px;
+  }
+
+  @media (max-width: 380px) {
+    .headline { font-size: 32px; }
+    .badge { width: 92px; height: 92px; }
+    .badge .num { font-size: 40px; }
+  }
+</style>
+
+<div class="glow"></div>
+<div class="confetti" style="left:8%;  background:var(--pink); animation-duration:6.5s; animation-delay:0s;"></div>
+<div class="confetti" style="left:18%; background:var(--gold); animation-duration:5.2s; animation-delay:1.1s;"></div>
+<div class="confetti" style="left:30%; background:var(--teal); animation-duration:7.1s; animation-delay:.4s;"></div>
+<div class="confetti" style="left:62%; background:var(--gold); animation-duration:6s;   animation-delay:1.6s;"></div>
+<div class="confetti" style="left:74%; background:var(--pink); animation-duration:5.6s; animation-delay:.2s;"></div>
+<div class="confetti" style="left:88%; background:var(--teal); animation-duration:6.8s; animation-delay:1.3s;"></div>
+<div class="confetti" style="left:50%; background:var(--pink); animation-duration:7.4s; animation-delay:.8s;"></div>
+
+<div class="page">
+  <div class="lights" aria-hidden="true">
+    <div class="light" style="animation-duration:1.8s; animation-delay:0s;"></div>
+    <div class="light" style="animation-duration:2.1s; animation-delay:.2s;"></div>
+    <div class="light" style="animation-duration:1.6s; animation-delay:.4s;"></div>
+    <div class="light" style="animation-duration:2.3s; animation-delay:.1s;"></div>
+    <div class="light" style="animation-duration:1.9s; animation-delay:.5s;"></div>
+    <div class="light" style="animation-duration:2.0s; animation-delay:.3s;"></div>
+    <div class="light" style="animation-duration:1.7s; animation-delay:.6s;"></div>
+  </div>
+
+  <div class="card">
+    <div class="balloon b1" aria-hidden="true"></div>
+    <div class="balloon b2" aria-hidden="true"></div>
+    <div class="balloon b3" aria-hidden="true"></div>
+
+    <p class="eyebrow reveal" style="animation-delay:.05s">Estás invitado(a)</p>
+    <h1 class="headline reveal" style="animation-delay:.15s">Nelly cumple</h1>
+
+    <div class="badge-row reveal" style="animation-delay:.25s">
+      <div class="badge">
+        <span class="num">61</span>
+        <span class="label">años</span>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="details reveal" style="animation-delay:.35s">
+      <div class="detail">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+        <span>Martes 6 de octubre, 2026</span>
+      </div>
+      <div class="detail">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+        <span>7:00 pm</span>
+      </div>
+      <div class="detail addr">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+        <span>Cra 119 # 77-75, Torre 1, Apto 401</span>
+      </div>
+    </div>
+
+    <p class="rsvp-label reveal" style="animation-delay:.45s">¿Nos acompañas?</p>
+
+    <div class="rsvp-row reveal" style="animation-delay:.5s">
+      <a class="rsvp-btn rsvp-yes" id="yesBtn" target="_blank" rel="noopener" href="#">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+        Sí, asistiré
+      </a>
+      <a class="rsvp-btn rsvp-no" id="noBtn" target="_blank" rel="noopener" href="#">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+        No puedo
+      </a>
+    </div>
+
+    <p class="confirm" id="confirmText" hidden></p>
+    <p class="hint">Confirma por WhatsApp al 313 888 4908</p>
+  </div>
+</div>
+
+<script>
+  var yesMsg = '¡Hola! Confirmo que SÍ asistiré a los 61 años de Nelly, el martes 6 de octubre a las 7:00 pm. ¡Allá estaré!';
+  var noMsg  = '¡Hola! Lamento informar que no podré asistir a los 61 años de Nelly el martes 6 de octubre. ¡Felicidades para ella!';
+  var yesBtn = document.getElementById('yesBtn');
+  var noBtn  = document.getElementById('noBtn');
+  var confirmText = document.getElementById('confirmText');
+
+  yesBtn.href = 'https://wa.me/573138884908?text=' + encodeURIComponent(yesMsg);
+  noBtn.href  = 'https://wa.me/573138884908?text=' + encodeURIComponent(noMsg);
+
+  yesBtn.addEventListener('click', function () {
+    confirmText.textContent = 'Se abrió WhatsApp para confirmar tu asistencia. ¡Gracias!';
+    confirmText.hidden = false;
+  });
+  noBtn.addEventListener('click', function () {
+    confirmText.textContent = 'Se abrió WhatsApp para avisar que no podrás asistir.';
+    confirmText.hidden = false;
+  });
+</script>
